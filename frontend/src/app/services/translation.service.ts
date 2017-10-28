@@ -1,17 +1,29 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
+import { Headers, Http } from '@angular/http';
 
-import { Translation } from "../translation";
-import { TRANSLATIONS } from "../mock-translation-queries";
+import 'rxjs/add/operator/toPromise';
+
+import {Translation} from "../translation";
+import {TRANSLATIONS} from "../mock-translation-queries";
 
 @Injectable()
 export class TranslationService {
+  private apiUrl = 'api/translations';
+
+  constructor(private http: Http) { }
+
+  // GET request to apiURL
   getTranslations(): Promise<Translation[]> {
-    return Promise.resolve(TRANSLATIONS);
+    return this.http.get(this.apiUrl)
+                    .toPromise()
+                    .then(response => response.json().data as Translation[])
+                    .catch(this.handleError);
+    // Promise.resolve(TRANSLATIONS);
   }
 
-  getTranslationSlowly(): Promise<Translation[]> {
-    return new Promise(resolve => {
-      setTimeout(()=> resolve(this.getTranslations()), 2000);
-    });
+  private handleError(error: any): Promise<any> {
+    console.error('Error occured', error);
+    return Promise.reject(error.message || error);
   }
+
 }
