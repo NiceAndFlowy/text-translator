@@ -1,4 +1,4 @@
 <form>
-  <textarea id="input-text-area" rows="4" cols="50"></textarea>
-  <input type="button" value="Translate"/>
+  <textarea [(ngModel)]="inputText" name="inputText" id="input-text-area" rows="4" cols="50"></textarea>
+  <input (click)="handleClick()" type="button" value="Translate"/>
 </form>

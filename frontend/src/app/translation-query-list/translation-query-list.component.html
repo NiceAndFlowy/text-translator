@@ -1,1 +1,7 @@
-<p>List of all translations</p>
+<ul>
+  <li *ngFor="let translation of translations">
+    <span>{{translation.inputText}}</span>
+    <span>{{translation.language}}</span>
+    <span>{{translation.translatedText}}</span>
+  </li>
+</ul>

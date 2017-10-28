@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {TranslationService} from "../services/translation.service";
+import {Translation} from "../translation";
 
 @Component({
   selector: 'app-translation-query-list',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./translation-query-list.component.css']
 })
 export class TranslationQueryListComponent implements OnInit {
+  translations: Translation[] = [];
 
-  constructor() { }
+  constructor(private translationService: TranslationService) {}
 
-  ngOnInit() {
+  getTranslations(): void {
+    this.translationService.getTranslations().then(translations => this.translations = translations);
+  }
+  ngOnInit(): void {
+    this.getTranslations();
   }
 
 }

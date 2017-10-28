@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./translation-form.component.css']
 })
 export class TranslationFormComponent implements OnInit {
+  inputText: string = '';
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  handleClick(): void {
+    console.log(this.inputText);
+  }
 }
