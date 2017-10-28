@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslationFormComponent } from './translation-form/translation-form.component';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +8,4 @@ import { TranslationFormComponent } from './translation-form/translation-form.co
 
 export class AppComponent {
   title = 'Translation App';
-  inputText = '';
 }
