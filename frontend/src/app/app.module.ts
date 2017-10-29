@@ -24,7 +24,6 @@ import {TranslationService} from "./services/translation.service";
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   providers: [TranslationService],
   bootstrap: [AppComponent]
