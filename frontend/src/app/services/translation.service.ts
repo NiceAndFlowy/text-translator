@@ -8,7 +8,7 @@ import {TRANSLATIONS} from "../mock-translation-queries";
 
 @Injectable()
 export class TranslationService {
-  private apiUrl = 'api/translations';
+  private apiUrl = 'http://localhost:8000/translations/';
 
   constructor(private http: Http) { }
 
@@ -16,7 +16,7 @@ export class TranslationService {
   getTranslations(): Promise<Translation[]> {
     return this.http.get(this.apiUrl)
                     .toPromise()
-                    .then(response => response.json().data as Translation[])
+                    .then(response => {response.json().data as Translation[], console.log(response)})
                     .catch(this.handleError);
     // Promise.resolve(TRANSLATIONS);
   }
