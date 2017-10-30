@@ -13,7 +13,7 @@ export class TranslationQueryListComponent implements OnInit {
   constructor(private translationService: TranslationService) {}
 
   getTranslations(): void {
-    this.translationService.getTranslations().then(translations => this.translations = translations);
+    this.translationService.getTranslations().then(translations =>  this.translations = translations);
   }
   ngOnInit(): void {
     this.getTranslations();

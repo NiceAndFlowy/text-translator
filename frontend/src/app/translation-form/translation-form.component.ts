@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TranslationService} from "../services/translation.service";
 
 @Component({
   selector: 'app-translation-form',
@@ -8,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class TranslationFormComponent implements OnInit {
   inputText: string = '';
 
-  constructor() { }
+  constructor(private translationService: TranslationService) { }
 
   ngOnInit() {
   }
 
-  handleClick(): void {
+  requestTranslation(): void {
+    if (!this.inputText || this.inputText.length === 0)
+      return;
+    this.translationService.create(this.inputText).then(response => console.log('form: response',response ));
     console.log(this.inputText);
   }
 }
