@@ -1,7 +1,7 @@
 <ul>
   <li *ngFor="let translation of translations">
-    <span>{{translation.inputText}}</span>
-    <span>{{translation.language}}</span>
-    <span>{{translation.translatedText}}</span>
+    <span [innerHTML]="translation.inputText"></span>
+    <span>{{translation.detectedLanguage}}</span>
+    <span [innerHTML]="translation.translatedText"></span>
   </li>
 </ul>
