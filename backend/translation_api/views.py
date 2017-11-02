@@ -9,6 +9,7 @@ from rest_framework import status
 from langdetect import detect
 from translate import Translator
 from mtranslate import translate
+from django.db.models.query import QuerySet
 import bleach
 import json
 from .models import Translation
@@ -16,12 +17,30 @@ from .serializers import TranslationSerializer
 
 
 class TranslationList(APIView):
+    def get_queryset(self):
+        """
+        Handle get requests with query param '?q': /translations/?q=hello
+        :return: queryset filtered with query param
+        """
+        queryset = Translation.objects.all()
+        inputText = self.request.query_params.get('q', None)
+        if inputText is not None:
+            inputText = bleach.clean(inputText)
+            queryset = queryset.filter(inputText=inputText)[0]
+        return queryset
+
     def get(self, request):
-        translations = Translation.objects.all()
-        serializer = TranslationSerializer(translations, many=True)
+        translations = self.get_queryset()
+        many = isinstance(translations, QuerySet)
+        serializer = TranslationSerializer(translations, many=many)
         return Response(serializer.data)
 
     def post(self, request):
+        """
+        :param request: inputText
+        :return: Response with status + json representation of created record
+            {'inputText': 'text', 'detectedLanguage': 'en', 'translatedText': translation}
+        """
         try:
             inputText = request.data['inputText']
             detectedLanguage = detect(inputText)
