@@ -1,3 +1,4 @@
+<a [routerLink]="['/translation']" [queryParams]="{submitted: this.submittedText}" routerLinkActive="active" (click)="saveCurrentInputText(this.inputText)">Translation</a>
 <form>
   <textarea [(ngModel)]="inputText" name="inputText" id="input-text-area" rows="4" cols="50"></textarea>
   <input (click)="requestTranslation()" type="button" value="Translate"/>

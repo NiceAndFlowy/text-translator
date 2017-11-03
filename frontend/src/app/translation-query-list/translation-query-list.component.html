@@ -1,7 +1,9 @@
+<a routerLink="/home" routerLinkActive="active">Home</a>
 <ul>
-  <li *ngFor="let translation of translations">
-    <span [innerHTML]="translation.inputText"></span>
-    <span>{{translation.detectedLanguage}}</span>
-    <span [innerHTML]="translation.translatedText"></span>
+  <p>Last submitted translation:</p>
+  <li>
+    <span [innerHTML]="this.translation.inputText"></span>
+    <span>{{this.translation.detectedLanguage}}</span>
+    <span [innerHTML]="this.translation.translatedText"></span>
   </li>
 </ul>

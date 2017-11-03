@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {Location} from "@angular/common";
 import {TranslationService} from "../services/translation.service";
 import {Translation} from "../translation";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-translation-query-list',
@@ -8,15 +11,50 @@ import {Translation} from "../translation";
   styleUrls: ['./translation-query-list.component.css']
 })
 export class TranslationQueryListComponent implements OnInit {
+  submitted: string = '';
   translations: Translation[] = [];
+  translation: Translation = {inputText: '', detectedLanguage: '', translatedText: ''};
 
-  constructor(private translationService: TranslationService) {}
+  constructor(private data: DataService,
+              private translationService: TranslationService,
+              private route: ActivatedRoute,
+              private location: Location) {
+  }
+
+  ngOnInit(): void {
+    //this.data.currentSubmittedText.subscribe(text => this.submitted = text);
+    /*
+     * this.submitted: derived from query param
+     * this.translation: value synched with DataService
+     */
+    this.submitted = this.route.snapshot.queryParams['submitted'];
+    this.data.currentTranslation.subscribe(translation => this.translation = translation);
+
+    // If recent submission differs from previous & isn't empty
+    if (this.submitted !== '' && this.submitted !== this.translation.inputText) {
+      this.getTranslation();
+    }
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  getTranslation(): void {
+    this.translationService.getTranslation(`q=${this.submitted}`).then(translation => {
+      this.translation = translation;
+      this.newTranslation(this.translation)
+    });
+  }
 
   getTranslations(): void {
-    this.translationService.getTranslations().then(translations =>  this.translations = translations);
+    this.translationService.getTranslations().then(translations => this.translations = translations);
   }
-  ngOnInit(): void {
-    this.getTranslations();
+
+  // Data service member[translation] updater
+  newTranslation(translation: Translation) {
+    this.data.changeCurrentTranslation(translation);
   }
+
 
 }
