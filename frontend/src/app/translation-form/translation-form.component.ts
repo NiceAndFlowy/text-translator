@@ -1,3 +1,5 @@
+import { DomSanitizer } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import {TranslationService} from "../services/translation.service";
 import { DataService } from "../services/data.service";
@@ -10,9 +12,10 @@ import { DataService } from "../services/data.service";
 export class TranslationFormComponent implements OnInit {
 
   inputText: string = '';
-  submittedText = '';
+  submittedText: string  = '';
+  status: string = '';
 
-  constructor(private translationService: TranslationService, private data: DataService) { }
+  constructor(private translationService: TranslationService, private data: DataService, private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.data.currentSubmittedText.subscribe(text => this.submittedText = text);
@@ -33,7 +36,9 @@ export class TranslationFormComponent implements OnInit {
     if (!this.inputText || this.inputText.length === 0)
       return;
     this.submittedText = this.inputText;
-    this.translationService.create(this.inputText);
+    this.translationService.create(this.inputText)
+      .then(data => this.status='success')
+      .catch(error => this.status='error');
     this.newSubmission(this.inputText);
   }
 }

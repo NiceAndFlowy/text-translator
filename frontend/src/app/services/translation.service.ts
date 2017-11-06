@@ -3,13 +3,14 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import {environment} from "../../environments/environment";
 import {Translation} from "../translation";
 
 @Injectable()
 export class TranslationService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  private translationApiUrl = 'http://localhost:8000/translations/';
+  private translationApiUrl = environment.apiUrl;
   private params = 'q';
 
   constructor(private http: Http) { }
@@ -41,7 +42,7 @@ export class TranslationService {
 
 
   private handleError(error: any): Promise<any> {
-    console.error('Error occured', error);
+    console.log('Error occured', error);
     return Promise.reject(error.message || error);
   }
 

@@ -20,7 +20,7 @@ from translation_api import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^translations/', views.TranslationList.as_view())
+    url(r'^api/translations/', views.TranslationList.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

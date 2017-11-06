@@ -1,5 +1,31 @@
-<a [routerLink]="['/translation']" [queryParams]="{submitted: this.submittedText}" routerLinkActive="active" (click)="saveCurrentInputText(this.inputText)">Translation</a>
-<form>
-  <textarea [(ngModel)]="inputText" name="inputText" id="input-text-area" rows="4" cols="50"></textarea>
-  <input (click)="requestTranslation()" type="button" value="Translate"/>
-</form>
+<a
+  class="link"
+  [routerLink]="['/translation']"
+  [queryParams]="{submitted: this.submittedText}"
+  routerLinkActive="active"
+  (click)="saveCurrentInputText(this.inputText)"
+>
+  View Translation
+</a>
+
+<!--Status messages-->
+<span *ngIf="this.status=='success'; else elseBlock" class="success">Successfully translated text</span>
+<ng-template #elseBlock>
+  <span *ngIf="this.status=='error'" class="error">An error occured posting this translation</span>
+</ng-template>
+
+<div class="container">
+  <form class="form">
+    <textarea class="form__textarea"
+              name="inputText"
+              id="input-text-area"
+              placeholder="Enter text to translate here"
+              [(ngModel)]="inputText">
+    </textarea>
+    <input class="form__submit"
+           (click)="requestTranslation()"
+           type="button"
+           value="Translate"/>
+  </form>
+</div>
+

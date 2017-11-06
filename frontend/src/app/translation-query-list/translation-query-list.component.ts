@@ -14,6 +14,7 @@ export class TranslationQueryListComponent implements OnInit {
   submitted: string = '';
   translations: Translation[] = [];
   translation: Translation = {inputText: '', detectedLanguage: '', translatedText: ''};
+  status: string = '';
 
   constructor(private data: DataService,
               private translationService: TranslationService,
@@ -41,14 +42,21 @@ export class TranslationQueryListComponent implements OnInit {
   }
 
   getTranslation(): void {
-    this.translationService.getTranslation(`q=${this.submitted}`).then(translation => {
-      this.translation = translation;
-      this.newTranslation(this.translation)
+    this.translationService.getTranslation(`q=${this.submitted}`)
+      .then(translation => {
+        this.status= 'success';
+        this.translation = translation;
+        this.newTranslation(this.translation)
+      })
+      .catch(error => {
+        this.status = 'error';
+        console.log('Error retrieving', error, error.json().status, error.json(), error.status)
     });
   }
 
   getTranslations(): void {
-    this.translationService.getTranslations().then(translations => this.translations = translations);
+    this.translationService.getTranslations()
+      .then(translations => this.translations = translations);
   }
 
   // Data service member[translation] updater

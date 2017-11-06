@@ -26,14 +26,20 @@ class TranslationList(APIView):
         input_text = self.request.query_params.get('q', None)
         if input_text is not None:
             input_text = bleach.clean(input_text)
-            queryset = queryset.filter(inputText=input_text)[0]
+            try:
+                queryset = queryset.filter(inputText=input_text)[0]
+            except IndexError:
+                return Response({'detail': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         return queryset
 
     def get(self, request):
         translations = self.get_queryset()
         many = isinstance(translations, QuerySet)
         serializer = TranslationSerializer(translations, many=many)
-        return Response(serializer.data)
+        try:
+            return Response(serializer.data)
+        except AttributeError:
+            return Response({'detail': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
         """

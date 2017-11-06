@@ -1,9 +1,26 @@
-<a routerLink="/home" routerLinkActive="active">Home</a>
-<ul>
-  <p>Last submitted translation:</p>
-  <li>
-    <span [innerHTML]="this.translation.inputText"></span>
-    <span>{{this.translation.detectedLanguage}}</span>
-    <span [innerHTML]="this.translation.translatedText"></span>
-  </li>
-</ul>
+<a class="link"
+   routerLink="/home"
+   routerLinkActive="active"
+>
+  Home
+</a>
+
+<!--Status Messages-->
+<span *ngIf="this.status==='error'; else elseBlock" class="error">There was an error retrieving the translation. Please retry</span>
+<ng-template #elseBlock>
+  <span *ngIf="this.status==='success'" class="success">Successfully retrieved translation</span>
+  <span *ngIf="this.status===''" class="info">Translation of last submitted text</span>
+</ng-template>
+
+<h1 class="header">Translation</h1>
+<div class="flex-container">
+  <div class="display"
+       [innerHTML]="this.translation.inputText +
+                    '<div class=display__info>'+ this.translation.detectedLanguage +'</div>'">
+  </div>
+  <div class="display"
+       [innerHTML]="this.translation.translatedText +
+                    '<div class=display__info>en</div>'">
+  </div>
+</div>
+
