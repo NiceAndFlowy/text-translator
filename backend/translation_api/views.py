@@ -22,12 +22,12 @@ class TranslationList(APIView):
         Handle get requests with query param '?q': /translations/?q=hello
         :return: queryset filtered with query param
         """
-        queryset = Translation.objects.all()
+        queryset = Translation.objects.all().order_by('-id')
         input_text = self.request.query_params.get('q', None)
         if input_text is not None:
             input_text = bleach.clean(input_text)
             try:
-                queryset = queryset.filter(inputText=input_text)[0]
+                queryset = queryset.filter(inputText=input_text).order_by('-id')[0]
             except IndexError:
                 return Response({'detail': 'Does not exist'}, status=status.HTTP_404_NOT_FOUND)
         return queryset
@@ -54,9 +54,7 @@ class TranslationList(APIView):
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         to_lang = 'en'
-        translated_text = translate(sanitized_input_text, to_lang, detected_lang)
-        print('detected language:%s; input:%s; translatedText:%s' %(detected_lang, sanitized_input_text, translated_text))
-
+        translated_text = translate(sanitized_input_text, to_lang, "auto")
         data = {'inputText': sanitized_input_text, 'detectedLanguage': detected_lang, 'translatedText': translated_text}
         serializer = TranslationSerializer(data=data)
         if serializer.is_valid():
