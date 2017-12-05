@@ -6,6 +6,36 @@
   padding: 0px;
 }
 
+.list {
+  width: 870px;
+  border: 1px solid rgba(34,36,38,.15);
+  margin: 0 10px 10px 10px;
+}
+
+.list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5em 0.33em 0.5em 0.33em;
+  border: 1px solid rgba(34,36,38,.15);
+}
+
+
+.list__item:not(:first-child) {
+}
+
+.item__container {
+  padding: 0 0.25em 0 0.25em;
+  width: 40%;
+}
+
+.item__container:nth-child(2) {
+  width: 5%;
+}
+
+.item__container:last-child {
+  margin-left: auto;
+}
 .header {
   margin: 10px 10px 10px 10px;
   font-size: 1.5em;
@@ -49,10 +79,16 @@
 }
 
 .form {
-  width: 500px;
-  font-size: 0em;
-
+  max-width: 470px;
+  min-width: 277px;
+  width: 470px;
+  font-size: 1em;
+  margin: 0px 15px 20px 10px;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
 }
+
 
 .link, .form__submit {
   -moz-user-select: none;
@@ -62,7 +98,7 @@
 }
 
 .form__textarea {
-  width: 470px;
+  width: 100%;
   min-width: 277px;
   height: 180px;
   margin: 0px;
@@ -73,6 +109,7 @@
   -moz-border-radius: 3px;
   border-radius: 3px;
   resize: none;
+  box-sizing: border-box;
 }
 
 .form__submit {
@@ -89,6 +126,8 @@
   -ms-transition: ease background-color .1s;
   -o-transition: ease background-color .1s;
   transition: ease background-color .1s;
+  display: block;
+  text-align: center;
 }
 
 .form__submit:hover {
@@ -131,7 +170,9 @@
 }
 
 .container {
-  margin: 10px 10px 10px 10px;
+  margin: 0px 10px 20px 10px;
+  max-width: 470px;
+  min-width: 277px;
 }
 
 .flex-container {
@@ -148,7 +189,7 @@
   min-width: 277px;
   max-width: 470px;
   height: 180px;
-  margin: 0px 10px 20px 10px;
+  margin: 0px 15px 20px 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -166,16 +207,41 @@
 
 .display__info {
   position: absolute;
-  bottom: 0;
-  padding: 0.5em 0.33em 0.5em 0.33em;
+  top: 140px;
+  padding: 0.5em 0 0.5em 0em;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  font-size: 1em !important;
 }
 
-@media screen and (max-width: 756px) {
-  .display {
+.form > .display__info {
+  padding: 0.5em 0.33em 0.5em 0.33em !important;
+}
+
+@media screen and (max-width: 900px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  body {
+    position: relative
+  }
+  .display, .form__textarea, .form {
     max-width: 100%;
+  }
+  .form {
+    width: 100%;
+  }
+  .form__submit {
+    margin: 20px auto 0;
+  }
+  .list {
+    box-sizing: border-box;
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+  .item__container {
+    width: 30%;
   }
 }

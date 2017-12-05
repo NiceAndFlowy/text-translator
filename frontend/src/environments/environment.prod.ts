@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8000/api/translations/'
+  apiUrl: 'http://django-retest.ymw7ficrfw.us-east-1.elasticbeanstalk.com/api/translations/'
 };

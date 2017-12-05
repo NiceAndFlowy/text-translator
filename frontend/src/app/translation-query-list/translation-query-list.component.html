@@ -6,13 +6,14 @@
 </a>
 
 <!--Status Messages-->
-<span *ngIf="this.status==='error'; else elseBlock" class="error">There was an error retrieving the translation. Please retry</span>
+<span *ngIf="this.status==='error'; else elseBlock" class="error">There was an error retrieving the translations. Please retry</span>
 <ng-template #elseBlock>
-  <span *ngIf="this.status==='success'" class="success">Successfully retrieved translation</span>
-  <span *ngIf="this.status===''" class="info">Translation of last submitted text</span>
+  <span *ngIf="this.status==='success'" class="success">Successfully retrieved all translations</span>
+  <span *ngIf="this.status===''" class="info"></span>
 </ng-template>
 
-<h1 class="header">Translation</h1>
+<h1 class="header">All Translations</h1>
+<!--
 <div class="flex-container">
   <div class="display"
        [innerHTML]="this.translation.inputText +
@@ -23,4 +24,11 @@
                     '<div class=display__info>en</div>'">
   </div>
 </div>
-
+-->
+<ul class="list">
+  <li *ngFor="let translation of translations" class="list__item">
+    <div [innerHTML]="translation.inputText" class="item__container"></div>
+    <div class="item__container">{{translation.detectedLanguage}}</div>
+    <div [innerHTML]="translation.translatedText" class="item__container"></div>
+  </li>
+</ul>
