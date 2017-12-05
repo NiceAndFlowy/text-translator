@@ -3,26 +3,46 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import {environment} from "../../environments/environment";
 import {Translation} from "../translation";
-import {TRANSLATIONS} from "../mock-translation-queries";
 
 @Injectable()
 export class TranslationService {
-  private apiUrl = 'http://localhost:8000/translations/';
+
+  private headers = new Headers({'Content-Type': 'application/json'});
+  private translationApiUrl = environment.apiUrl;
+  private params = 'q';
 
   constructor(private http: Http) { }
 
   // GET request to apiURL
   getTranslations(): Promise<Translation[]> {
-    return this.http.get(this.apiUrl)
+    return this.http.get(this.translationApiUrl + this.params)
                     .toPromise()
-                    .then(response => {response.json().data as Translation[], console.log(response)})
+                    .then(response => response.json() as Translation[])
                     .catch(this.handleError);
     // Promise.resolve(TRANSLATIONS);
   }
 
+  getTranslation(queryParams): Promise<Translation> {
+    return this.http.get(this.translationApiUrl + '?' + queryParams)
+                    .toPromise()
+                    .then(response => response.json() as Translation)
+                    .catch(this.handleError);
+    // Promise.resolve(TRANSLATIONS);
+  }
+
+  create(inputText: string): Promise<Translation> {
+    return this.http
+      .post(this.translationApiUrl, JSON.stringify({inputText: inputText}), {headers: this.headers})
+      .toPromise()
+      .then(res => res.json() as Translation )
+      .catch(this.handleError);
+  }
+
+
   private handleError(error: any): Promise<any> {
-    console.error('Error occured', error);
+    console.log('Error occured', error);
     return Promise.reject(error.message || error);
   }
 

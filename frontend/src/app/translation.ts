@@ -1,5 +1,5 @@
 export class Translation {
   inputText: string;
-  language: string;
+  detectedLanguage: string;
   translatedText: string;
 }

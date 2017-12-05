@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Translation(models.Model):
     inputText = models.CharField(max_length=5000)
@@ -7,4 +8,4 @@ class Translation(models.Model):
     translatedText = models.CharField(max_length=5000)
 
     def __str__(self):
-        return self.translatedText
+        return self.inputText

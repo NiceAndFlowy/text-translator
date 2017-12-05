@@ -7,7 +7,8 @@ import {TranslationQueryListComponent} from "../translation-query-list/translati
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: TranslationFormComponent },
-  { path: 'list', component: TranslationQueryListComponent }
+  { path: 'list', component: TranslationQueryListComponent },
+  { path: 'translation', component: TranslationQueryListComponent }
 ];
 
 @NgModule({
