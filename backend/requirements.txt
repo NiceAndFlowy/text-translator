@@ -30,6 +30,6 @@ six==1.11.0
 tabulate==0.7.5
 termcolor==1.1.0
 translate==2.0.0
-urllib3==1.22
+urllib3==1.26.5
 webencodings==0.5.1
 websocket-client==0.44.0
